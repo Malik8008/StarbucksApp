@@ -47,9 +47,4 @@ public class ProductController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         return productService.delete(id);
     }
-
-    @PutMapping("/discount/{categoryId}")
-    public ResponseEntity<List<getProduct>> applyDiscountToCategory(@PathVariable Long categoryId,@RequestParam int discount) {
-        return productService.addDiscountForCategory(categoryId,discount);
-    }
 }

@@ -7,5 +7,5 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IDiscountService {
-    public ResponseEntity<List<getProduct>> addDiscountForCategory(Long categoryId,int discount);
+    ResponseEntity<List<getProduct>> addDiscountForCategory(Long categoryId,int discount);
 }

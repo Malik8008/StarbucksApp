@@ -9,7 +9,6 @@ import com.safarov.starbucks.repository.SizeRepository;
 import com.safarov.starbucks.service.ISizeService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 public class SizeService implements ISizeService {
 
     private final SizeRepository sizeRepository;
@@ -34,7 +33,7 @@ public class SizeService implements ISizeService {
 
     @Override
     public List<getSize> getAll() {
-        List<Size> sizes = sizeRepository.findAll();
+        List<Size> sizes = sizeRepository.findAllByDeletedFalse();
         return sizes.stream().map(size -> modelMapper.map(size, getSize.class)).collect(Collectors.toList());
     }
 
@@ -50,6 +49,7 @@ public class SizeService implements ISizeService {
         if (oldsize == null) {
             return null;
         }
+        oldsize.setId(id);
         oldsize.setName(size.getName());
         return modelMapper.map(sizeRepository.save(oldsize), getSize.class);
     }

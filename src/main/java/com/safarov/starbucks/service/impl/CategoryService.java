@@ -33,7 +33,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public List<getCategory> getAll() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAllByDeletedFalse();
         return categories.stream().map(category -> modelMapper.map(category,getCategory.class)).collect(Collectors.toList());
     }
 

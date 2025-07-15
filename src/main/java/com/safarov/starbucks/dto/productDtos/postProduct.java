@@ -1,7 +1,6 @@
 package com.safarov.starbucks.dto.productDtos;
 
-import com.safarov.starbucks.model.Category;
-import com.safarov.starbucks.model.Size;
+
 import lombok.Data;
 
 @Data

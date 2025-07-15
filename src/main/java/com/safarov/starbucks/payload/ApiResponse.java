@@ -14,6 +14,4 @@ public class ApiResponse<T> {
     @JsonProperty("message")
     String message;
     T data;
-
-
 }

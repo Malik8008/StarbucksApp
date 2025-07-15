@@ -52,8 +52,8 @@ public class ProductService implements IProductService, IDiscountService {
 
     @Override
     public ResponseEntity<ApiResponse<getProduct>> post(postProduct postProduct) {
-        Category category = categoryRepository.findByDeletedFalseAndId(postProduct.getCategory_id()).orElseThrow(() -> new IdNotFoundException("Category id not found: " + postProduct.getCategory_id()));
-        Size size = sizeRepository.findByDeletedFalseAndId(postProduct.getSize_id()).orElseThrow(() -> new IdNotFoundException("Size id not found: " + postProduct.getSize_id()));
+        Category category = categoryRepository.findByDeletedFalseAndId(postProduct.getCategory_id()).orElseThrow(() -> new IdNotFoundException("Category not found: " + postProduct.getCategory_id()));
+        Size size = sizeRepository.findByDeletedFalseAndId(postProduct.getSize_id()).orElseThrow(() -> new IdNotFoundException("Size not found: " + postProduct.getSize_id()));
         Product product = modelMapper.map(postProduct, Product.class);
         product.setCategory(category);
         product.setSize(size);
@@ -64,8 +64,8 @@ public class ProductService implements IProductService, IDiscountService {
 
     @Override
     public ResponseEntity<getProduct> put(Long id, putProduct putProduct) {
-        Category category = categoryRepository.findByDeletedFalseAndId(putProduct.getCategory_id()).orElseThrow(() -> new IdNotFoundException("Category id not found: " + putProduct.getCategory_id()));
-        Size size = sizeRepository.findByDeletedFalseAndId(putProduct.getSize_id()).orElseThrow(() -> new IdNotFoundException("Size id not found: " + putProduct.getSize_id()));
+        Category category = categoryRepository.findByDeletedFalseAndId(putProduct.getCategory_id()).orElseThrow(() -> new IdNotFoundException("Category not found: " + putProduct.getCategory_id()));
+        Size size = sizeRepository.findByDeletedFalseAndId(putProduct.getSize_id()).orElseThrow(() -> new IdNotFoundException("Size not found: " + putProduct.getSize_id()));
         Product oldProduct = productRepository.findById(id).orElseThrow(()-> new IdNotFoundException("Product id is not found"));
             Product product = modelMapper.map(putProduct, Product.class);
             product.setId(id);
@@ -103,12 +103,17 @@ public class ProductService implements IProductService, IDiscountService {
     public ResponseEntity<List<getProduct>> addDiscountForCategory(Long categoryId, int discount) {
         List<Product> products = productRepository.findAllByCategoryId(categoryId);
         List<getProduct> getProducts = products.stream().map(product -> {
-            double newSalePrice = product.getSalePrice() * (1 - discount / 100.0);
-            product.setSalePrice(newSalePrice);
-            product.setDiscount(discount);
-            productRepository.save(product);
-            return modelMapper.map(product, getProduct.class);
-        }).collect(Collectors.toList());
+            if (product.getDiscount()==0) {
+                double newSalePrice = product.getSalePrice() * (1 - discount / 100.0);
+                product.setSalePrice(newSalePrice);
+                product.setDiscount(discount);
+                productRepository.save(product);
+                return modelMapper.map(product, getProduct.class);
+            }
+            else {
+                return modelMapper.map(product, getProduct.class);
+            }
+            }).collect(Collectors.toList());
         return ResponseEntity.ok(getProducts);
     }
 }
