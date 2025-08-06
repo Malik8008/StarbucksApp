@@ -12,6 +12,7 @@ import com.safarov.starbucks.repository.CustomerRepository;
 import com.safarov.starbucks.repository.PurchaseRepository;
 import com.safarov.starbucks.repository.ProductRepository;
 import com.safarov.starbucks.service.IPurchaseService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -48,18 +49,20 @@ public class PurchaseService implements IPurchaseService {
     @Override
     public ResponseEntity<getPurchase> saveOrder(postPurchase orderDto) {
         Purchase purchase = modelMapper.map(orderDto, Purchase.class);
-        purchase.setId(null);
         purchase.setCustomer(customerRepository.findById(orderDto.getCustomerId()).orElseThrow(() -> new IdNotFoundException("Customer not found")));
         List<PurchaseItem> itemList = new ArrayList<>();
-        for (postPurchaseItem orderItem : orderDto.getPurchaseItems()) {
-            Product product = productRepository.findById(orderItem.getProductId()).orElseThrow(() -> new IdNotFoundException("Product not found"));
-            PurchaseItem purchaseItemDto = new PurchaseItem();
-            purchaseItemDto.setProduct(product);
-            purchaseItemDto.setCount(orderItem.getCount());
-            purchaseItemDto.setPurchase(purchase);
-            itemList.add(purchaseItemDto);
+        for (postPurchaseItem itemDto : orderDto.getPurchaseItems()) {
+            Product product = productRepository.findById(itemDto.getProductId())
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
+
+            PurchaseItem item = new PurchaseItem();
+            item.setProduct(product);
+            item.setCount(itemDto.getCount());
+            item.setPurchase(purchase); // əlaqəni qur
+
+            itemList.add(item);
         }
-        purchase.setPurchaseItems(itemList);
+        purchase.setItems(itemList);
         Purchase orderSaved = purchaseRepository.save(purchase);
         return ResponseEntity.ok(modelMapper.map(orderSaved, getPurchase.class));
     }

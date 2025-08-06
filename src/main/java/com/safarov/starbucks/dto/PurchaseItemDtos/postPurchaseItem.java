@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class postPurchaseItem {
-    Long productId;
     int count;
+    Long productId;
 }

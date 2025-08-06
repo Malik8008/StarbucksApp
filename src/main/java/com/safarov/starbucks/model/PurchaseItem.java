@@ -8,17 +8,17 @@ import lombok.experimental.FieldDefaults;
 
 
 @Data
-@Entity
-@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PurchaseItem extends BaseEntity {
+@Entity
+@Table(name = "purchase_item")
+public class PurchaseItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    int id;
     int count;
     @ManyToOne
     @JoinColumn(name = "purchase_id")
-    Purchase purchase;
+    private Purchase purchase;
     @ManyToOne
     @JoinColumn(name = "product_id")
     Product product;

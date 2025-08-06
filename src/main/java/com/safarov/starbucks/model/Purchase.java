@@ -12,7 +12,8 @@ import java.util.List;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Purchase extends BaseEntity {
+@Table(name = "purchase") // bu olmalıdır
+public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -23,5 +24,8 @@ public class Purchase extends BaseEntity {
     @JoinColumn(name = "customer_id")
     Customer customer;
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<PurchaseItem> purchaseItems;
+    private List<PurchaseItem> items;
+    private boolean deleted;
+    private boolean isDiscounted;
+
 }
