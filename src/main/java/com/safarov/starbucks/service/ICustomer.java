@@ -6,7 +6,7 @@ import com.safarov.starbucks.dto.customerDtos.putCustomer;
 
 import java.util.List;
 
-public interface ICustomerService {
+public interface ICustomer {
     public getCustomer getCustomer(Long customerId);
     public List<getCustomer> getAllCustomers();
     public getCustomer createCustomer(postCustomer customer);

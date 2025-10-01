@@ -3,8 +3,7 @@ package com.safarov.starbucks.controller;
 import com.safarov.starbucks.dto.customerDtos.getCustomer;
 import com.safarov.starbucks.dto.customerDtos.postCustomer;
 import com.safarov.starbucks.dto.customerDtos.putCustomer;
-import com.safarov.starbucks.dto.sizeDtos.getSize;
-import com.safarov.starbucks.service.impl.CustomerService;
+import com.safarov.starbucks.service.impl.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequestMapping("/customer")
 @RequiredArgsConstructor
 public class CustomerController {
-    private final CustomerService customerService;
+    private final Customer customerService;
 
     @GetMapping("{id}")
     public ResponseEntity<getCustomer> getCustomer(@PathVariable Long id) {

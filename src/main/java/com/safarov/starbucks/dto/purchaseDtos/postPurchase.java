@@ -13,6 +13,6 @@ public class postPurchase {
     BigDecimal totalPrice;
     LocalDateTime orderDate;
     String description;
-    Long customerId;
+    Long customer_id;
     List<postPurchaseItem> purchaseItems;
 }

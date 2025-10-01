@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class putPurchaseItem {
     int count;
-    Long productId;
+    Long product_id;
 }

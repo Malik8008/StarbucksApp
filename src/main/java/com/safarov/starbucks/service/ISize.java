@@ -6,7 +6,7 @@ import com.safarov.starbucks.dto.sizeDtos.putSize;
 
 import java.util.List;
 
-public interface ISizeService {
+public interface ISize {
     public getSize get(Long id);
     public List<getSize> getAll();
     public getSize post(postSize size);

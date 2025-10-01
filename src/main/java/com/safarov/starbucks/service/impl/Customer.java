@@ -4,9 +4,8 @@ import com.safarov.starbucks.dto.customerDtos.getCustomer;
 import com.safarov.starbucks.dto.customerDtos.postCustomer;
 import com.safarov.starbucks.dto.customerDtos.putCustomer;
 import com.safarov.starbucks.exception.IdNotFoundException;
-import com.safarov.starbucks.model.Customer;
 import com.safarov.starbucks.repository.CustomerRepository;
-import com.safarov.starbucks.service.ICustomerService;
+import com.safarov.starbucks.service.ICustomer;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -16,14 +15,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerService implements ICustomerService {
+public class Customer implements ICustomer {
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
 
     @Override
     public getCustomer getCustomer(Long customerId) {
-        Customer customer = customerRepository.findByDeletedFalseAndId(customerId);
+        com.safarov.starbucks.model.Customer customer = customerRepository.findByDeletedFalseAndId(customerId);
         if (customer == null) {
             throw new IdNotFoundException("Customer id is empty");
         }
@@ -32,19 +31,19 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public List<getCustomer> getAllCustomers() {
-        List<Customer> customers = customerRepository.findAllByDeletedFalse();
+        List<com.safarov.starbucks.model.Customer> customers = customerRepository.findAllByDeletedFalse();
         return customers.stream().map(customer -> modelMapper.map(customer,getCustomer.class)).collect(Collectors.toList());
     }
 
     @Override
     public getCustomer createCustomer(postCustomer customer) {
-        Customer newCustomer = modelMapper.map(customer, Customer.class);
+        com.safarov.starbucks.model.Customer newCustomer = modelMapper.map(customer, com.safarov.starbucks.model.Customer.class);
         return modelMapper.map(customerRepository.save(newCustomer),getCustomer.class);
     }
 
     @Override
     public getCustomer updateCustomer(Long customerId, putCustomer customer) {
-        Customer oldCustomer = customerRepository.findByDeletedFalseAndId(customerId);
+        com.safarov.starbucks.model.Customer oldCustomer = customerRepository.findByDeletedFalseAndId(customerId);
         if (oldCustomer == null) {
             throw new IdNotFoundException("Customer id is empty");
         }
@@ -56,7 +55,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void deleteCustomer(Long customerId) {
-        Customer oldCustomer = customerRepository.findById(customerId).orElseThrow(() -> new IdNotFoundException("Customer id not found"));
+        com.safarov.starbucks.model.Customer oldCustomer = customerRepository.findById(customerId).orElseThrow(() -> new IdNotFoundException("Customer id not found"));
         oldCustomer.setDeleted(true);
         customerRepository.save(oldCustomer);
     }

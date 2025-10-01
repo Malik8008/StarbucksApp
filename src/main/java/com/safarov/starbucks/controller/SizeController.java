@@ -3,7 +3,7 @@ package com.safarov.starbucks.controller;
 import com.safarov.starbucks.dto.sizeDtos.getSize;
 import com.safarov.starbucks.dto.sizeDtos.postSize;
 import com.safarov.starbucks.dto.sizeDtos.putSize;
-import com.safarov.starbucks.service.impl.SizeService;
+import com.safarov.starbucks.service.impl.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/size")
 public class SizeController {
 
-    private final SizeService sizeService;
+    private final Size sizeService;
 
     @GetMapping("{id}")
     public ResponseEntity<getSize> get(@PathVariable Long id) {

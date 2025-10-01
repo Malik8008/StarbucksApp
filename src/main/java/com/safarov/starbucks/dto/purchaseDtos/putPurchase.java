@@ -12,6 +12,6 @@ public class putPurchase {
     String description;
     BigDecimal price;
     LocalDateTime orderDate;
-    Long customerId;
+    Long customer_id;
     List<putPurchaseItem> purchaseItems;
 }

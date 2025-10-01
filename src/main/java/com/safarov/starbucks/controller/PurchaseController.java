@@ -2,8 +2,7 @@ package com.safarov.starbucks.controller;
 
 import com.safarov.starbucks.dto.purchaseDtos.getPurchase;
 import com.safarov.starbucks.dto.purchaseDtos.postPurchase;
-import com.safarov.starbucks.model.Purchase;
-import com.safarov.starbucks.service.impl.PurchaseService;
+import com.safarov.starbucks.service.impl.Purchase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.List;
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class PurchaseController {
-    private final PurchaseService purchaseService;
+    private final Purchase purchaseService;
 
     @GetMapping("/{id}")
     public ResponseEntity<getPurchase> getPurchase(@PathVariable Long id) {

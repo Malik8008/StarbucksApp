@@ -1,11 +1,10 @@
 package com.safarov.starbucks.controller;
 
-import com.safarov.starbucks.dto.categoryDtos.getCategory;
 import com.safarov.starbucks.dto.productDtos.getProduct;
 import com.safarov.starbucks.dto.productDtos.postProduct;
 import com.safarov.starbucks.dto.productDtos.putProduct;
 import com.safarov.starbucks.payload.ApiResponse;
-import com.safarov.starbucks.service.impl.ProductService;
+import com.safarov.starbucks.service.impl.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
-    private final ProductService productService;
+    private final Product productService;
 
     @GetMapping("/{id}")
     public ResponseEntity<getProduct> get(@PathVariable Long id) {

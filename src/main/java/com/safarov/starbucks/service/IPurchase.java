@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface IPurchaseService {
+public interface IPurchase {
     ResponseEntity<getPurchase> getPurchase(Long id);
     ResponseEntity<List<getPurchase>> getAllPurchase();
     ResponseEntity<getPurchase> saveOrder(postPurchase purchaseDto);

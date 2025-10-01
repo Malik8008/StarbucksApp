@@ -21,7 +21,6 @@ public class Purchase {
     BigDecimal totalPrice;
     LocalDateTime orderDate;
     @ManyToOne
-    @JoinColumn(name = "customer_id")
     Customer customer;
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseItem> items;
